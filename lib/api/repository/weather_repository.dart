@@ -1,9 +1,14 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_court/api/interfaces/network_call_interface.dart';
 import 'package:food_court/api/interfaces/weather_interface.dart';
 import 'package:food_court/api/keys/api_keys.dart';
 import 'package:food_court/api/models/weather_forcast/weather_model/weather_model.dart';
 import 'package:food_court/api/services/dio_service.dart';
 import 'package:food_court/api/utils/network_response.dart';
+
+final repositoryProvider = Provider(
+  (ref) => WeatherRepository(),
+);
 
 /// A repository class that handles fetching the weather details from the service class [DioService]
 ///
@@ -24,7 +29,6 @@ class WeatherRepository implements WeatherInterface {
       final response = await _service.get(url: url, queryParameters: {
         "lat": latitude,
         "lon": longitude,
-        "cnt": 50,
         "units": "metric",
         "appid": ApiKeys.apiKey,
       });

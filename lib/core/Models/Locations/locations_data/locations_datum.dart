@@ -4,14 +4,14 @@ import 'package:collection/collection.dart';
 
 class LocationsDatum {
   String? city;
-  String? lat;
-  String? lng;
+  double? lat;
+  double? lng;
   String? country;
   String? iso2;
   String? adminName;
   String? capital;
-  String? population;
-  String? populationProper;
+  double? population;
+  double? populationProper;
 
   LocationsDatum({
     this.city,
@@ -28,14 +28,14 @@ class LocationsDatum {
   factory LocationsDatum.fromMap(Map<String, dynamic> data) {
     return LocationsDatum(
       city: data['city'] as String?,
-      lat: data['lat'] as String?,
-      lng: data['lng'] as String?,
+      lat: double.parse(data['lat'] as String),
+      lng: double.parse(data['lng'] as String),
       country: data['country'] as String?,
       iso2: data['iso2'] as String?,
       adminName: data['admin_name'] as String?,
       capital: data['capital'] as String?,
-      population: data['population'] as String?,
-      populationProper: data['population_proper'] as String?,
+      population: double.parse(data['population'] as String),
+      populationProper: double.parse(data['population_proper'] as String),
     );
   }
 

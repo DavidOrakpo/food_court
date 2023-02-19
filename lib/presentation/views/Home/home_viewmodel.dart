@@ -1,15 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_court/api/models/current_weather/weather_forcast/weather_forcast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:food_court/api/models/weather_forcast/weather_model/three_hour_segments_list.dart';
 import 'package:food_court/api/models/weather_forcast/weather_model/weather_model.dart';
 import 'package:food_court/api/repository/weather_repository.dart';
 import 'package:food_court/core/Alerts/notification_manager.dart';
-
-final repositoryProvider = Provider(
-  (ref) => WeatherRepository(),
-);
 
 final homeProvider = ChangeNotifierProvider(
   (ref) {
@@ -25,10 +22,21 @@ class HomePageViewModel with ChangeNotifier {
 
   WeatherModel? _weatherModel;
 
+  //todo: REMOVE THIS FIELD ONCE THE CLASS IS COMPLETED
   /// The data retrieved from the API.
   WeatherModel? get weatherModel => _weatherModel;
   set weatherModel(WeatherModel? value) {
     _weatherModel = value;
+    notifyListeners();
+  }
+
+  WeatherForcast? _weatherForcast;
+
+  /// The data retrieved from the API.
+  WeatherForcast? get weatherForcast => _weatherForcast;
+
+  set weatherForcast(WeatherForcast? value) {
+    _weatherForcast = value;
     notifyListeners();
   }
 
@@ -41,6 +49,7 @@ class HomePageViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  // todo: Remove this list when done
   /// The Store of weather values (3 - Hour Segments) for the selected day
   List<ThreeHourSegmentsList>? threeHourSegmentsDayList = [];
 
@@ -165,7 +174,7 @@ class HomePageViewModel with ChangeNotifier {
       NotificationManager.notifyError(result.message);
       return;
     }
-    weatherModel = result.data as WeatherModel;
+    weatherForcast = result.data as WeatherForcast;
   }
 
   /// Computes the average temperature of the users selected date: [selectedDate]
