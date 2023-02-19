@@ -73,6 +73,20 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> modifyFavouriteLists(
+      {required String nameOfOldCity, required String nameOfNewCity}) async {
+    var tempChosenCity = _locationsData!.locationsData!
+        .firstWhere((element) => element.city == nameOfNewCity);
+    var tempWeatherForcast =
+        await fetchData(tempChosenCity.lat!, tempChosenCity.lng!);
+    var newFavourite = FavouriteCity(
+        cityInfo: tempChosenCity, weatherForcast: tempWeatherForcast);
+    var indexOfOldFavourite = listOfFavouriteCities!
+        .indexWhere((element) => element.cityInfo!.city == nameOfOldCity);
+    listOfFavouriteCities![indexOfOldFavourite] = newFavourite;
+    notifyListeners();
+  }
+
   /// Requests location permission from the user
   ///
   /// Informs the user if location services are active or not.
