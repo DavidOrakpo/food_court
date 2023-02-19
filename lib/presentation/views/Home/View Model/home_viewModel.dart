@@ -147,6 +147,8 @@ class HomeViewModel with ChangeNotifier {
   ///
   /// Checks if [_handleLocationPermission] is successful,
   /// proceeds to get weather details from default city by calling [setChosenCity]
+  /// Proceeds to intialize list of 15 cities [listOfFifteenCities], from that list,
+  /// it generates list of favourite cities [listOfFavouriteCities]
   Future<void> initialize() async {
     //todo: Add persistence to favourite cities list
     _isLoading = true;
