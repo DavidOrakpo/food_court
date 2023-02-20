@@ -34,8 +34,8 @@ class LocationsDatum {
       iso2: data['iso2'] as String?,
       adminName: data['admin_name'] as String?,
       capital: data['capital'] as String?,
-      population: double.parse(data['population'] as String),
-      populationProper: double.parse(data['population_proper'] as String),
+      population: double.tryParse(data['population'] as String),
+      populationProper: double.tryParse(data['population_proper'] as String),
     );
   }
 

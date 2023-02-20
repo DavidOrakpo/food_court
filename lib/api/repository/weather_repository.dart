@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_court/api/interfaces/network_call_interface.dart';
 import 'package:food_court/api/interfaces/weather_interface.dart';
 import 'package:food_court/api/keys/api_keys.dart';
+import 'package:food_court/api/models/current_weather/weather_forcast/weather_forcast.dart';
 import 'package:food_court/api/models/weather_forcast/weather_model/weather_model.dart';
 import 'package:food_court/api/services/dio_service.dart';
 import 'package:food_court/api/utils/network_response.dart';
@@ -34,7 +35,7 @@ class WeatherRepository implements WeatherInterface {
       });
       if (response.success && response.data is Map) {
         return NetworkResponse.success(
-            data: WeatherModel.fromMap(response.data),
+            data: WeatherForcast.fromMap(response.data),
             code: response.code,
             message: response.message);
       }

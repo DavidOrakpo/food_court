@@ -31,7 +31,7 @@ class HomeViewModel with ChangeNotifier {
   /// Loads the json data from the asset file
   Future<LocationsData> getLocationsFromLocalJson() async {
     _localLocationsDataResponse =
-        await rootBundle.loadString("lib/core/Models/ng.json");
+        await rootBundle.loadString("assets/json/ng.json");
     _locationsData = LocationsData.fromJson(_localLocationsDataResponse!);
     return _locationsData!;
   }
@@ -160,7 +160,7 @@ class HomeViewModel with ChangeNotifier {
           .where((element) => element.city != "Lagos")
           .take(14)
           .toList();
-      listOfFifteenCities!.add(_chosenCity!);
+      listOfFifteenCities!.insert(0, _chosenCity!);
       var tempFavCitiesList = listOfFifteenCities!
           .where((element) => element.city != "Lagos")
           .take(3)
@@ -177,11 +177,11 @@ class HomeViewModel with ChangeNotifier {
 
       await Future.wait([
         fetchData(tempFavCitiesList[0].lat!, tempFavCitiesList[0].lat!)
-            .then((value) => favCityOneWeatherForcast = value),
+            .then((value) => tempFavCitiesListFavCitiesForcast[0] = value),
         fetchData(tempFavCitiesList[1].lat!, tempFavCitiesList[1].lat!)
-            .then((value) => favCityTwoWeatherForcast = value),
+            .then((value) => tempFavCitiesListFavCitiesForcast[1] = value),
         fetchData(tempFavCitiesList[2].lat!, tempFavCitiesList[2].lat!)
-            .then((value) => favCityThreeWeatherForcast = value),
+            .then((value) => tempFavCitiesListFavCitiesForcast[2] = value),
       ]);
       for (var i = 0; i < tempFavCitiesList.length; i++) {
         listOfFavouriteCities!.add(
@@ -190,6 +190,8 @@ class HomeViewModel with ChangeNotifier {
               weatherForcast: tempFavCitiesListFavCitiesForcast[i]),
         );
       }
+      _isLoading = false;
+      notifyListeners();
     });
   }
 }

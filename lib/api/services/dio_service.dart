@@ -47,7 +47,7 @@ class DioService extends NetworkApi {
         default:
       }
     } finally {
-      _dioClient.close();
+      // _dioClient.close();
     }
     return result;
   }

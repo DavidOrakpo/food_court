@@ -10,6 +10,8 @@ class InfoDropDown extends StatefulWidget {
       this.hintText,
       this.height,
       this.borderColor,
+      this.selectedItemBuilder,
+      this.dropDownColor,
       this.hintColor,
       this.trailingWidget,
       this.items,
@@ -19,7 +21,8 @@ class InfoDropDown extends StatefulWidget {
   final List<DropdownMenuItem<String>>? items;
   final bool? isExpanded;
   final Widget? trailingWidget;
-  final Color? iconColor, borderColor, hintColor;
+  final List<Widget> Function(BuildContext)? selectedItemBuilder;
+  final Color? iconColor, borderColor, hintColor, dropDownColor;
   final void Function(String?)? onChanged;
   final double? height;
   @override
@@ -33,7 +36,7 @@ class _InfoDropDownState extends State<InfoDropDown> {
       height: widget.height ?? 45,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: AppColors.gray.shade400,
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
           color: widget.borderColor ?? AppColors.gray,
@@ -41,6 +44,7 @@ class _InfoDropDownState extends State<InfoDropDown> {
       ),
       child: DropdownButton(
           value: widget.dropdownvalue,
+          dropdownColor: widget.dropDownColor,
           focusColor: Colors.transparent,
           icon: widget.trailingWidget ?? const Icon(Icons.arrow_drop_down),
           hint: Text(
@@ -50,7 +54,8 @@ class _InfoDropDownState extends State<InfoDropDown> {
           iconEnabledColor: widget.iconColor ?? AppColors.primaryGradient2,
           isExpanded: widget.isExpanded ?? true,
           underline: const SizedBox(),
-          style: const TextStyle(color: AppColors.primary),
+          selectedItemBuilder: widget.selectedItemBuilder,
+          style: const TextStyle(color: AppColors.white),
           items: widget.items ??
               const [
                 DropdownMenuItem(
