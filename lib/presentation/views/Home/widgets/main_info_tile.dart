@@ -25,7 +25,7 @@ class _MainInfoTileState extends ConsumerState<MainInfoTile> {
       child: SizedBox(
         height: 120,
         child: provider.isLoading
-            ? !provider.locationServiceEnabled!
+            ? !provider.locationServiceEnabled! && provider.isLoading
                 ? Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
