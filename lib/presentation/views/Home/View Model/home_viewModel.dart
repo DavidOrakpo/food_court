@@ -78,6 +78,7 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Change an Item in the watch List/Favourite List and update the shared preference instance
   Future<void> modifyFavouriteLists(
       {required String nameOfOldCity, required String nameOfNewCity}) async {
     var tempChosenCity = _locationsData!.locationsData!
@@ -135,6 +136,7 @@ class HomeViewModel with ChangeNotifier {
     return result.data as WeatherForcast;
   }
 
+  /// Fetches the Users Current position and weather data
   Future<void> getUsersCurrentPosition() async {
     isLoading = true;
     var userPosition = await Geolocator.getCurrentPosition(
@@ -146,6 +148,7 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  /// Changes the chosen city to the one with the specified [cityName]
   Future<void> setChosenCity(String cityName) async {
     _chosenCity = _locationsData!.locationsData!
         .firstWhere((element) => element.city == cityName);
@@ -200,7 +203,6 @@ class HomeViewModel with ChangeNotifier {
             .where((element) => element.city != "Lagos")
             .take(3)
             .toList();
-
       }
       WeatherForcast? favCityOneWeatherForcast,
           favCityTwoWeatherForcast,
@@ -238,7 +240,6 @@ class HomeViewModel with ChangeNotifier {
                 cityInfo: tempFavCitiesList[i],
                 weatherForcast: tempFavCitiesListFavCitiesForcast[i]),
           );
-
         }
         _isLoading = false;
         notifyListeners();
