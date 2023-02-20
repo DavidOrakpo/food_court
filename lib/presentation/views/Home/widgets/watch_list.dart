@@ -42,7 +42,6 @@ class _WatchListTileState extends ConsumerState<WatchListTile> {
             height: 10,
           ),
           SizedBox(
-            // height: 80,
             width: double.infinity,
             child: CarouselSlider(
               items:
@@ -50,13 +49,10 @@ class _WatchListTileState extends ConsumerState<WatchListTile> {
                 var item = provider.listOfFavouriteCities?[index];
                 return GestureDetector(
                   onTap: () async {
-                    await provider.setChosenCity(item!.weatherForcast!.name!);
+                    await provider.setChosenCity(item!.cityInfo!.city!);
                   },
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
-                    // height: 70,
-                    // width: 250,
-
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: AppColors.primary.withOpacity(0.6),
@@ -81,8 +77,8 @@ class _WatchListTileState extends ConsumerState<WatchListTile> {
                                   size.width, item!.cityInfo!.city!);
                             },
                             child: Container(
-                              height: 30,
-                              width: 30,
+                              height: 31,
+                              width: 31,
                               decoration: const BoxDecoration(
                                   color: AppColors.containerColor,
                                   borderRadius: BorderRadius.only(
@@ -105,8 +101,9 @@ class _WatchListTileState extends ConsumerState<WatchListTile> {
                                   text: TextSpan(
                                     children: [
                                       TextSpan(
-                                        text: "${item?.cityInfo?.city!} ",
+                                        text: "${item?.cityInfo?.city!}\n ",
                                         style: AppTextStyle.headerFour.copyWith(
+                                          fontSize: 18,
                                           color: AppColors.white,
                                         ),
                                       ),
@@ -134,7 +131,7 @@ class _WatchListTileState extends ConsumerState<WatchListTile> {
                                     Text(
                                       "${item?.weatherForcast?.main?.temp?.toStringAsFixed(0)}\u00B0",
                                       style: AppTextStyle.headerOne.copyWith(
-                                        fontSize: provider.isLoading ? 14 : 30,
+                                        fontSize: 30,
                                         color: AppColors.white,
                                         height: 1,
                                       ),

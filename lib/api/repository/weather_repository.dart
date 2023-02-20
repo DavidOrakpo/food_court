@@ -3,7 +3,6 @@ import 'package:food_court/api/interfaces/network_call_interface.dart';
 import 'package:food_court/api/interfaces/weather_interface.dart';
 import 'package:food_court/api/keys/api_keys.dart';
 import 'package:food_court/api/models/current_weather/weather_forcast/weather_forcast.dart';
-import 'package:food_court/api/models/weather_forcast/weather_model/weather_model.dart';
 import 'package:food_court/api/services/dio_service.dart';
 import 'package:food_court/api/utils/network_response.dart';
 

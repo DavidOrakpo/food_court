@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_court/api/models/current_weather/weather_forcast/weather_forcast.dart';
 import 'package:food_court/api/repository/weather_repository.dart';
@@ -14,13 +16,10 @@ final homeModelProvider = ChangeNotifierProvider((ref) {
 });
 
 class HomeViewModel with ChangeNotifier {
+  HomeViewModel(this._weatherRepository);
+
   /// The connection to the weather repository
   final WeatherRepository _weatherRepository;
-
-  /// Local data Storage gotten from calling the API
-  WeatherForcast? _chosenCityWeatherForcast;
-
-  HomeViewModel(this._weatherRepository);
 
   /// The private JSON response of the list of Nigerian Cities
   String? _localLocationsDataResponse;
@@ -37,14 +36,18 @@ class HomeViewModel with ChangeNotifier {
   }
 
   LocationsDatum? _chosenCity;
-  LocationsDatum? get chosenCity => _chosenCity;
 
+  /// The Chosen city that has its weather details displayed
+  LocationsDatum? get chosenCity => _chosenCity;
   set chosenCity(LocationsDatum? value) {
     _chosenCity = value;
     notifyListeners();
   }
 
+  /// List of 15 Cities the user can select from
   List<LocationsDatum>? listOfFifteenCities = [];
+
+  /// List of Watch List / Favourite Cities the user can select from
   List<FavouriteCity>? listOfFavouriteCities = [];
 
   bool? _locationServiceEnabled = false;
@@ -65,9 +68,10 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  WeatherForcast? _chosenCityWeatherForcast;
+
   /// The data retrieved from the API.
   WeatherForcast? get chosenCityWeatherForcast => _chosenCityWeatherForcast;
-
   set chosenCityWeatherForcast(WeatherForcast? value) {
     _chosenCityWeatherForcast = value;
     notifyListeners();
@@ -163,7 +167,11 @@ class HomeViewModel with ChangeNotifier {
           .where((element) => element.city != "Lagos")
           .take(14)
           .toList();
+      listOfFifteenCities!.sort(
+        (a, b) => a.city!.compareTo(b.city!),
+      );
       listOfFifteenCities!.insert(0, _chosenCity!);
+
       var tempFavCitiesList = listOfFifteenCities!
           .where((element) => element.city != "Lagos")
           .take(3)

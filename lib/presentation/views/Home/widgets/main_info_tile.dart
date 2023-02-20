@@ -23,15 +23,53 @@ class _MainInfoTileState extends ConsumerState<MainInfoTile> {
     return Padding(
       padding: AppSpacings.horizontalPadding,
       child: SizedBox(
-        height: 140,
+        height: 120,
         child: provider.isLoading
-            ? Center(
-                child: Image.asset(
-                  "assets/icons/cloudy_load3.png",
-                  height: 60,
-                  width: 70,
-                ),
-              )
+            ? !provider.locationServiceEnabled!
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Location Service is Off. Turn it on and try again",
+                          style: AppTextStyle.bodyThree.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                          child: GestureDetector(
+                            onTap: () async {
+                              await provider.initialize();
+                            },
+                            child: Container(
+                              height: 45,
+                              width: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color:
+                                    AppColors.primaryGradient3.withOpacity(0.5),
+                              ),
+                              child: const Icon(
+                                Icons.refresh,
+                                color: AppColors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                : Center(
+                    child: Image.asset(
+                      "assets/icons/cloudy_load3.png",
+                      height: 60,
+                      width: 70,
+                    ),
+                  )
             : Row(
                 children: [
                   Expanded(
