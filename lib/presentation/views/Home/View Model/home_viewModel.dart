@@ -128,10 +128,13 @@ class HomeViewModel with ChangeNotifier {
   }
 
   Future<void> getUsersCurrentPosition() async {
+    isLoading = true;
     var userPosition = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     _chosenCityWeatherForcast =
         await fetchData(userPosition.latitude, userPosition.longitude);
+    _isLoading = false;
+    // _chosenCity = _locationsData.locationsData.firstWhere((element) => element.,)
     notifyListeners();
   }
 

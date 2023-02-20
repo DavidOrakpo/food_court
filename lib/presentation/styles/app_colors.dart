@@ -5,6 +5,7 @@ class AppColors {
   static const Color containerColor = Color(0xA175A1FF);
   static const Color timeTileColor = Color(0x800F33E3);
   static const Color primary = Color(0xFF0F33E3);
+  static const Color primary2 = Color(0xFF678EEE);
   static const Color primaryGradient2 = Color(0xFF5E8BF3);
   static const Color primaryGradient3 = Color(0xFF709CFD);
   static const Color textGray = Color(0x66FFFFFF);

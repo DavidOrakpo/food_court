@@ -59,19 +59,9 @@ class _InfoDropDownState extends State<InfoDropDown> {
           items: widget.items ??
               const [
                 DropdownMenuItem(
-                  value: "Mr.",
-                  child: Text("Mr."),
+                  value: "Lagos",
+                  child: Text("Lagos"),
                 ),
-                DropdownMenuItem(
-                  value: "Mrs.",
-                  child: Text(
-                    "Mrs.",
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: "Ms.",
-                  child: Text("Ms."),
-                )
               ],
           onChanged: widget.onChanged ?? (value) {}),
     );
