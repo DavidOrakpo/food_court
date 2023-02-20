@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:food_court/core/Utilities/Shared%20Preferences/shared_pref.dart';
 import 'package:food_court/presentation/styles/app_colors.dart';
 import 'package:food_court/presentation/styles/spacing.dart';
 import 'package:food_court/presentation/views/Home/View%20Model/home_viewModel.dart';
@@ -28,7 +29,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Future<void> _fetchData() async {
-    await ref.read(homeModelProvider).initialize();
+    // await AppSharedPreferences()
+    //     .init()
+    //     .then((value) => AppSharedPreferences().preferencesInstance!.clear());
+    await AppSharedPreferences()
+        .init()
+        .then((value) => ref.read(homeModelProvider).initialize());
   }
 
   @override

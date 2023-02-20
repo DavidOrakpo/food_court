@@ -9,6 +9,7 @@ import 'package:food_court/core/Alerts/notification_manager.dart';
 import 'package:food_court/core/Models/Favourite%20CIty/favourite_city.dart';
 import 'package:food_court/core/Models/Locations/locations_data/locations_data.dart';
 import 'package:food_court/core/Models/Locations/locations_data/locations_datum.dart';
+import 'package:food_court/core/Utilities/Shared%20Preferences/shared_pref.dart';
 import 'package:geolocator/geolocator.dart';
 
 final homeModelProvider = ChangeNotifierProvider((ref) {
@@ -87,6 +88,9 @@ class HomeViewModel with ChangeNotifier {
         cityInfo: tempChosenCity, weatherForcast: tempWeatherForcast);
     var indexOfOldFavourite = listOfFavouriteCities!
         .indexWhere((element) => element.cityInfo!.city == nameOfOldCity);
+    await AppSharedPreferences().preferencesInstance!.setString(
+        AppSharedPreferences.watchListCities[indexOfOldFavourite],
+        nameOfNewCity);
     listOfFavouriteCities![indexOfOldFavourite] = newFavourite;
     notifyListeners();
   }
@@ -171,11 +175,33 @@ class HomeViewModel with ChangeNotifier {
         (a, b) => a.city!.compareTo(b.city!),
       );
       listOfFifteenCities!.insert(0, _chosenCity!);
+      List<LocationsDatum> tempFavCitiesList = [];
+      if (AppSharedPreferences()
+          .preferencesInstance!
+          .containsKey(AppSharedPreferences.watchListCountries)) {
+        String? favCityOne = AppSharedPreferences()
+            .preferencesInstance!
+            .getString(AppSharedPreferences.watchListOne);
+        String? favCityTwo = AppSharedPreferences()
+            .preferencesInstance!
+            .getString(AppSharedPreferences.watchListTwo);
+        String? favCityThree = AppSharedPreferences()
+            .preferencesInstance!
+            .getString(AppSharedPreferences.watchListThree);
 
-      var tempFavCitiesList = listOfFifteenCities!
-          .where((element) => element.city != "Lagos")
-          .take(3)
-          .toList();
+        tempFavCitiesList = listOfFifteenCities!
+            .where((element) =>
+                element.city == favCityOne ||
+                element.city == favCityTwo ||
+                element.city == favCityThree)
+            .toList();
+      } else {
+        tempFavCitiesList = listOfFifteenCities!
+            .where((element) => element.city != "Lagos")
+            .take(3)
+            .toList();
+
+      }
       WeatherForcast? favCityOneWeatherForcast,
           favCityTwoWeatherForcast,
           favCityThreeWeatherForcast;
@@ -194,6 +220,31 @@ class HomeViewModel with ChangeNotifier {
         fetchData(tempFavCitiesList[2].lat!, tempFavCitiesList[2].lat!)
             .then((value) => tempFavCitiesListFavCitiesForcast[2] = value),
       ]);
+
+      if (!AppSharedPreferences()
+          .preferencesInstance!
+          .containsKey(AppSharedPreferences.watchListCountries)) {
+        await AppSharedPreferences()
+            .preferencesInstance!
+            .setBool(AppSharedPreferences.watchListCountries, true);
+
+        for (var i = 0; i < tempFavCitiesList.length; i++) {
+          await AppSharedPreferences().preferencesInstance!.setString(
+              AppSharedPreferences.watchListCities[i],
+              tempFavCitiesList[i].city!);
+
+          listOfFavouriteCities!.add(
+            FavouriteCity(
+                cityInfo: tempFavCitiesList[i],
+                weatherForcast: tempFavCitiesListFavCitiesForcast[i]),
+          );
+
+        }
+        _isLoading = false;
+        notifyListeners();
+        return;
+      }
+
       for (var i = 0; i < tempFavCitiesList.length; i++) {
         listOfFavouriteCities!.add(
           FavouriteCity(

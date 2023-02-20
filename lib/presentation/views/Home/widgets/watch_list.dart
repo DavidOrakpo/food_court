@@ -39,7 +39,7 @@ class _WatchListTileState extends ConsumerState<WatchListTile> {
             ),
           ),
           const SizedBox(
-            height: 10,
+            height: 8,
           ),
           SizedBox(
             width: double.infinity,
@@ -77,8 +77,8 @@ class _WatchListTileState extends ConsumerState<WatchListTile> {
                                   size.width, item!.cityInfo!.city!);
                             },
                             child: Container(
-                              height: 31,
-                              width: 31,
+                              height: 30,
+                              width: 30,
                               decoration: const BoxDecoration(
                                   color: AppColors.containerColor,
                                   borderRadius: BorderRadius.only(
